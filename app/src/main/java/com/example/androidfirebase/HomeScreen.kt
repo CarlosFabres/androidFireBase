@@ -48,6 +48,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.filled.LocationOn
 
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.graphics.Color
+
 @Composable
 fun HomeScreen(navController: NavController) {
     val context = LocalContext.current
@@ -105,13 +111,15 @@ fun HomeScreen(navController: NavController) {
         Image(
             painter = painterResource(id = R.drawable.logo_home),
             contentDescription = "Login image",
-            modifier = Modifier
-                .size(200.dp)
+            modifier = Modifier.size(200.dp)
         )
 
         Text(
             text = "Bienvenido, $username",
-            style = MaterialTheme.typography.headlineMedium
+            style = MaterialTheme.typography.headlineMedium.copy(
+                fontSize = 28.sp, // Aumenta el tamaño del texto
+                fontWeight = FontWeight.Bold // Aumenta el peso para mayor claridad
+            )
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -123,17 +131,29 @@ fun HomeScreen(navController: NavController) {
                 .height(50.dp),
             shape = RoundedCornerShape(8.dp)
         ) {
-            Text("Perfil")
+            Text("Perfil", fontSize = 20.sp) // Aumenta el tamaño del texto del botón
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Campo de texto para el usuario
+        // Campo de texto más grande y claro
         OutlinedTextField(
             value = userInput,
             onValueChange = { userInput = it },
-            label = { Text("Escribe algo...") },
-            modifier = Modifier.fillMaxWidth()
+            label = {
+                Text(
+                    "Escribe algo...",
+                    fontSize = 20.sp, // Tamaño del texto de la etiqueta
+                    fontWeight = FontWeight.Bold, // Hacer que la etiqueta sea más clara
+                    color = Color.Black // Puedes cambiar el color para mayor contraste
+                )
+            },
+            textStyle = LocalTextStyle.current.copy(
+                fontSize = 24.sp, // Tamaño del texto dentro del campo
+                color = Color.Black // Color del texto dentro del campo
+            ),
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text) // Mantiene el teclado para texto
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -149,12 +169,12 @@ fun HomeScreen(navController: NavController) {
             shape = RoundedCornerShape(8.dp)
         ) {
             Icon(
-                imageVector = Icons.Filled.PlayArrow, // Cambia a tu ícono deseado
+                imageVector = Icons.Filled.PlayArrow,
                 contentDescription = "Reproducir texto",
-                modifier = Modifier.size(24.dp) // Ajusta el tamaño del ícono según tus necesidades
+                modifier = Modifier.size(24.dp)
             )
-            Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
-            Text("Reproducir texto")
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("Reproducir texto", fontSize = 20.sp) // Aumenta el tamaño del texto del botón
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -178,32 +198,31 @@ fun HomeScreen(navController: NavController) {
             shape = RoundedCornerShape(8.dp)
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.speak), // Cambia a tu ícono deseado
+                painter = painterResource(id = R.drawable.speak),
                 contentDescription = "Hablar",
-                modifier = Modifier.size(24.dp) // Ajusta el tamaño del ícono según tus necesidades
+                modifier = Modifier.size(24.dp)
             )
-            Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
-            Text("Hablar")
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("Hablar", fontSize = 20.sp) // Aumenta el tamaño del texto del botón
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { navController.navigate(Routes.locationS) }, // Redirige a la pantalla de geolocalización
+            onClick = { navController.navigate(Routes.locationS) },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
             shape = RoundedCornerShape(8.dp)
         ) {
             Icon(
-                imageVector = Icons.Filled.LocationOn, // Cambia a un ícono relevante si es necesario
+                imageVector = Icons.Filled.LocationOn,
                 contentDescription = "Ir a geolocalización",
                 modifier = Modifier.size(24.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Text("Ubicación")
+            Text("Ubicación", fontSize = 20.sp) // Aumenta el tamaño del texto del botón
         }
-
     }
 }
 

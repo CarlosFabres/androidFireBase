@@ -7,9 +7,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -51,17 +53,25 @@ fun RegisterScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            // Título principal
             Text(
                 text = "Crea tu cuenta",
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    fontSize = 28.sp, // Tamaño más grande para mayor legibilidad
+                    fontWeight = FontWeight.Bold
+                ),
                 color = MaterialTheme.colorScheme.primary
             )
 
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Subtítulo
             Text(
-                text = "Regístrate con tu correo electrónico",
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
+                text = "Regístrate con tu correo",
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontSize = 20.sp, // Aumentar tamaño para accesibilidad
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f) // Mejor contraste
+                )
             )
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -72,6 +82,10 @@ fun RegisterScreen(navController: NavController) {
                 onValueChange = { username = it },
                 label = { Text("Nombre de usuario") },
                 singleLine = true,
+                textStyle = LocalTextStyle.current.copy(
+                    fontSize = 22.sp, // Texto dentro del campo más grande
+                    color = Color.Black // Buen contraste para el texto
+                ),
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = MaterialTheme.colorScheme.primary,
@@ -87,6 +101,10 @@ fun RegisterScreen(navController: NavController) {
                 onValueChange = { phoneNumber = it },
                 label = { Text("Teléfono") },
                 singleLine = true,
+                textStyle = LocalTextStyle.current.copy(
+                    fontSize = 22.sp, // Tamaño de texto accesible
+                    color = Color.Black
+                ),
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = MaterialTheme.colorScheme.primary,
@@ -102,6 +120,10 @@ fun RegisterScreen(navController: NavController) {
                 onValueChange = { email = it },
                 label = { Text("Correo electrónico") },
                 singleLine = true,
+                textStyle = LocalTextStyle.current.copy(
+                    fontSize = 22.sp,
+                    color = Color.Black
+                ),
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = MaterialTheme.colorScheme.primary,
@@ -118,6 +140,10 @@ fun RegisterScreen(navController: NavController) {
                 label = { Text("Contraseña") },
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
+                textStyle = LocalTextStyle.current.copy(
+                    fontSize = 22.sp,
+                    color = Color.Black
+                ),
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = MaterialTheme.colorScheme.primary,
@@ -127,15 +153,13 @@ fun RegisterScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(32.dp))
 
+            // Botón de registro
             Button(
                 onClick = {
                     auth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
-                                // Obtén el ID del usuario registrado
                                 val userId = auth.currentUser?.uid
-
-                                // Crea un nuevo registro en Realtime Database con los datos adicionales
                                 val user = mapOf(
                                     "userId" to userId,
                                     "username" to username,
@@ -146,18 +170,15 @@ fun RegisterScreen(navController: NavController) {
                                 userId?.let {
                                     database.child("users").child(it).setValue(user)
                                         .addOnSuccessListener {
-                                            // Registro exitoso, redirigir a la pantalla de inicio
                                             navController.navigate(Routes.homeS) {
                                                 popUpTo(Routes.registerS) { inclusive = true }
                                             }
                                         }
                                         .addOnFailureListener {
-                                            // Manejar el error al guardar en Realtime Database
                                             showSnackbar = true
                                         }
                                 }
                             } else {
-                                // Fallo en el registro
                                 showSnackbar = true
                             }
                         }
@@ -167,17 +188,24 @@ fun RegisterScreen(navController: NavController) {
                     .height(50.dp),
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Text("Registrarse", style = MaterialTheme.typography.bodyLarge)
+                Text(
+                    "Registrarse",
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        fontSize = 20.sp // Tamaño más grande para accesibilidad
+                    )
+                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Texto para volver al login
             TextButton(
                 onClick = { navController.navigate("login_S") },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Text(
                     "¿Ya tienes una cuenta? Inicia sesión",
+                    fontSize = 18.sp,
                     color = MaterialTheme.colorScheme.primary
                 )
             }
@@ -185,11 +213,13 @@ fun RegisterScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
         }
 
+        // Snackbar para manejar mensajes de estado
         SnackbarHost(
             hostState = snackbarHostState,
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
+
 }
 
 

@@ -50,6 +50,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import android.util.Log
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.sp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -94,26 +96,43 @@ fun LoginScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            // Texto de bienvenida más grande y en negrita
             Text(
                 text = "Bienvenido",
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    fontSize = 28.sp, // Tamaño mayor para una lectura más clara
+                    fontWeight = FontWeight.Bold // Negrita para mayor énfasis
+                ),
                 color = MaterialTheme.colorScheme.primary
             )
 
+            // Subtexto de inicio de sesión con tamaño y color accesible
             Text(
                 text = "Inicie sesión en su cuenta",
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontSize = 20.sp, // Aumentar tamaño de letra
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f) // Mayor claridad
+                )
             )
 
             Spacer(modifier = Modifier.height(32.dp))
 
+            // Campo de texto de correo electrónico con tamaño de letra más grande
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text("Correo electrónico") },
+                label = {
+                    Text(
+                        "Correo electrónico",
+                        fontSize = 20.sp, // Aumentar tamaño de etiqueta
+                        fontWeight = FontWeight.Bold // Hacer la etiqueta más clara
+                    )
+                },
                 singleLine = true,
+                textStyle = LocalTextStyle.current.copy(
+                    fontSize = 22.sp, // Texto dentro del campo más grande
+                    color = Color.Black // Buen contraste para legibilidad
+                ),
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = MaterialTheme.colorScheme.primary,
@@ -123,12 +142,23 @@ fun LoginScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Campo de texto de contraseña con las mismas mejoras de accesibilidad
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text("Contraseña") },
+                label = {
+                    Text(
+                        "Contraseña",
+                        fontSize = 20.sp, // Aumentar tamaño de etiqueta
+                        fontWeight = FontWeight.Bold // Hacer la etiqueta más clara
+                    )
+                },
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
+                textStyle = LocalTextStyle.current.copy(
+                    fontSize = 22.sp, // Texto dentro del campo más grande
+                    color = Color.Black // Buen contraste para legibilidad
+                ),
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = MaterialTheme.colorScheme.primary,
@@ -138,6 +168,7 @@ fun LoginScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(32.dp))
 
+            // Botón de acceso con texto más grande y centrado
             Button(
                 onClick = {
                     // Autenticación con Firebase
@@ -158,30 +189,38 @@ fun LoginScreen(navController: NavController) {
                     .height(50.dp),
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Text("Acceso", style = MaterialTheme.typography.bodyLarge)
+                Text(
+                    "Acceso",
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        fontSize = 20.sp // Texto más grande
+                    )
+                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Texto de registro con tamaño más grande
             TextButton(
                 onClick = { navController.navigate("register_S") },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Text(
                     "¿No tienes una cuenta? Regístrate",
+                    fontSize = 18.sp, // Aumentar tamaño del texto
                     color = MaterialTheme.colorScheme.primary
                 )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Añadir enlace para recuperación de contraseña
+            // Texto para la recuperación de contraseña con mejoras en accesibilidad
             TextButton(
                 onClick = { navController.navigate("recover_password_S") }, // Navegar a la pantalla de recuperación
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Text(
                     "¿Olvidaste tu contraseña?",
+                    fontSize = 18.sp, // Aumentar tamaño del texto
                     color = MaterialTheme.colorScheme.primary
                 )
             }
@@ -189,9 +228,12 @@ fun LoginScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
         }
 
+        // Snackbar para notificaciones en la parte inferior
         SnackbarHost(
             hostState = snackbarHostState,
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
+
 }
+

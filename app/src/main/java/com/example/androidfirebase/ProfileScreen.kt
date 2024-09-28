@@ -59,6 +59,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import android.util.Log
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.sp
 import com.google.firebase.auth.FirebaseUser
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -115,35 +117,61 @@ fun ProfileScreen(navController: NavController) {
                     .border(2.dp, MaterialTheme.colorScheme.primary, CircleShape)
             )
 
+            // Texto de perfil con tamaño de letra más grande y en negrita
             Text(
                 text = "Perfil",
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    fontSize = 28.sp, // Aumenta el tamaño de letra para mayor claridad
+                    fontWeight = FontWeight.Bold // Hacerlo más claro y visible
+                ),
                 color = MaterialTheme.colorScheme.primary
             )
 
             Spacer(modifier = Modifier.height(32.dp))
 
+            // Campo de texto más grande y con un texto más claro
             OutlinedTextField(
                 value = username,
                 onValueChange = { username = it },
-                label = { Text("Nombre de usuario") },
+                label = {
+                    Text(
+                        "Nombre de usuario",
+                        fontSize = 20.sp, // Aumentar tamaño de etiqueta
+                        fontWeight = FontWeight.Bold // Hacer la etiqueta más clara
+                    )
+                },
                 singleLine = true,
+                textStyle = LocalTextStyle.current.copy(
+                    fontSize = 22.sp, // Texto dentro del campo más grande
+                    color = Color.Black // Asegurar que el texto sea claramente visible
+                ),
                 modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Segundo campo de texto con configuraciones similares
             OutlinedTextField(
                 value = phoneNumber,
                 onValueChange = { phoneNumber = it },
-                label = { Text("Número de teléfono") },
+                label = {
+                    Text(
+                        "Número de teléfono",
+                        fontSize = 20.sp, // Aumentar tamaño de etiqueta
+                        fontWeight = FontWeight.Bold // Hacer la etiqueta más clara
+                    )
+                },
                 singleLine = true,
+                textStyle = LocalTextStyle.current.copy(
+                    fontSize = 22.sp, // Texto dentro del campo más grande
+                    color = Color.Black // Asegurar que el texto sea claramente visible
+                ),
                 modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(32.dp))
 
+            // Botón para actualizar datos con texto más grande
             Button(
                 onClick = {
                     userId?.let {
@@ -166,12 +194,12 @@ fun ProfileScreen(navController: NavController) {
                     .height(50.dp),
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Text("Actualizar datos")
+                Text("Actualizar datos", fontSize = 20.sp) // Aumentar tamaño del texto del botón
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Botón para cerrar sesión
+            // Botón para cerrar sesión con texto más grande
             Button(
                 onClick = {
                     FirebaseAuth.getInstance().signOut()
@@ -181,18 +209,19 @@ fun ProfileScreen(navController: NavController) {
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(50.dp), // Asegura la misma altura
+                    .height(50.dp),
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Text("Cerrar sesión")
+                Text("Cerrar sesión", fontSize = 20.sp) // Aumentar tamaño del texto del botón
             }
         }
 
-        // Mover el SnackbarHost al final para evitar conflictos de alineación
+        // Snackbar para mostrar mensajes en la parte inferior
         SnackbarHost(
             hostState = snackbarHostState,
             modifier = Modifier.align(Alignment.BottomCenter) // Alineación al centro en la parte inferior
         )
     }
+
 }
 
