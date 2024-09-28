@@ -6,4 +6,6 @@ object Routes {
     const val registerS = "register_S"
     const val recoverPasswordS = "recover_password_S"
     const val profileS = "profile_S"
+    const val locationS = "location_S"
+
 }

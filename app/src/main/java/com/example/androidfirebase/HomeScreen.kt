@@ -41,11 +41,12 @@ import androidx.compose.ui.res.painterResource
 import java.util.Locale
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow 
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Icon
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.filled.LocationOn
 
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -184,6 +185,25 @@ fun HomeScreen(navController: NavController) {
             Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
             Text("Hablar")
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = { navController.navigate(Routes.locationS) }, // Redirige a la pantalla de geolocalización
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Filled.LocationOn, // Cambia a un ícono relevante si es necesario
+                contentDescription = "Ir a geolocalización",
+                modifier = Modifier.size(24.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("Ubicación")
+        }
+
     }
 }
 

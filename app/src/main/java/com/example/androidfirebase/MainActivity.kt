@@ -1,5 +1,6 @@
 package com.example.androidfirebase
 
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -62,6 +63,10 @@ class MainActivity : ComponentActivity() {
 
                 composable(Routes.profileS) {
                     ProfileScreen(navController)
+                }
+
+                composable(Routes.locationS) {
+                    LocationScreen(navController)
                 }
             }
         }
